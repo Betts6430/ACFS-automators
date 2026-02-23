@@ -30,40 +30,33 @@ def select_ram_insensitive(select_element, target_text):
 
 def select_OS_insensitive(select_element, target_text):
     """Fills in OS dropdown section by checking the input target_text
-        Options include abcdefghijklmnopqrstuvwxyz."""
+        Options include Chrome OS, Linux, No OS, Win 10 - MRRP, Win 11 - MRRP."""
     
     target = str(target_text).lower().strip()
 
     if target == "no os" or target is None: select_insensitive(select_element, "No OS")
-    if "linux" in target:   select_insensitive(select_element, "Linux")
+    if "linux" in target: select_insensitive(select_element, "Linux")
+    if "chrome" in target: select_insensitive(select_element, "Chrome OS")
     else:   select_insensitive(select_element, "Win 11 - MRRP")
 
 
 def fill_in_optical(driver, optical_type):
     """Fills in optical drive dropdown section by checking the input optical_type
-        Options include abcdefghijklmnopqrstuvwxyz."""
+        Options include CD x Read, CD x Read/Write, DVD x Read, DVD x Read/Write, Unspecified."""
     
     opticalDrive_dropdown = Select(driver.find_element(By.ID, "ContentPlaceHolder1_ddl_OpticalDrive"))
     target = str(optical_type).lower().strip()
 
-    if "cd" in target and "dvd" in target:
-        if ("rom" in target) or ("read only" in target): opticalDrive_dropdown.select_by_visible_text("ENTERCORRECTSTRING")
-        else: opticalDrive_dropdown.select_by_visible_text("ENTERCORRECTSTRING")
-        return True
-
     if "cd" in target:
-        if ("rom" in target) or ("read only" in target): opticalDrive_dropdown.select_by_visible_text("ENTERCORRECTSTRING")
-        else: opticalDrive_dropdown.select_by_visible_text("ENTERCORRECTSTRING")
-        return True
+        if ("rom" in target) or ("read only" in target): opticalDrive_dropdown.select_by_visible_text("CD x Read")
+        else: opticalDrive_dropdown.select_by_visible_text("CD x Read/Write")
 
-    if "dvd" in target:
-        if ("rom" in target) or ("read only" in target): opticalDrive_dropdown.select_by_visible_text("ENTERCORRECTSTRING")
-        else: opticalDrive_dropdown.select_by_visible_text("ENTERCORRECTSTRING")
-        return True
+    elif "dvd" in target:
+        if ("rom" in target) or ("read only" in target): opticalDrive_dropdown.select_by_visible_text("DVD x Read")
+        else: opticalDrive_dropdown.select_by_visible_text("DVD x Read/Write")
 
     else:
-        opticalDrive_dropdown.select_by_visible_text("ENTERCORRECTSTRING")
-        return True
+        opticalDrive_dropdown.select_by_visible_text("Unspecified")
 
 
 
@@ -106,15 +99,6 @@ def fill_page(computer_data):
     computerBarcode_field.clear()
     computerBarcode_field.send_keys(computer_data["Computer Barcode"])
 
-    # computerType_dropdown = Select(driver.find_element(By.ID, "ContentPlaceHolder1_ddl_ComputerType"))
-    # computerType_dropdown.select_by_visible_text("Laptop")
-
-    # brand_dropdown = Select(driver.find_element(By.ID, "ContentPlaceHolder1_ddl_Brands"))
-    # brand_dropdown.select_by_visible_text(computer_data[""])
-
-    # model_dropdown = Select(driver.find_element(By.ID, "ContentPlaceHolder1_ddl_Model"))
-    # model_dropdown.select_by_visible_text(computer_data[""])
-
     CPU_dropdown = Select(driver.find_element(By.ID, "ContentPlaceHolder1_ddl_CPU"))
     select_insensitive(CPU_dropdown, computer_data["i Series"])
 
@@ -141,17 +125,8 @@ def fill_page(computer_data):
 
     messagebox.showinfo("Finished?", "Review the information and press submit when ready.")
 
-
-
-    # Submit the form
-    # submit_button = driver.find_element(By.CSS_SELECTOR, "input[type='submit']")
-    # submit_button.click()
-
-    # # Wait for form submission to complete
-    # wait.until(EC.url_changes(driver.current_url))
-
     print("Form submitted successfully!")
-    sleep(15)
+    sleep(10)
     driver.quit()
 
 
@@ -166,5 +141,5 @@ def run_automation(data_list):
     # driver.quit()
 
 
-# comp_data = {'Serial #': 'PC1WVCJY', 'Hard Drive': 'AB01H-00000081552', 'Computer Barcode': 'AB01C-00000126030', 'Old COA': 'Windows 10 Pro', 'New COA': 3305659803308, 'Initials': 'CP', '#': 2, 'Type': 'Thinkpad X13 Gen 1', 'i Series': 'Xeon Quadcore 1.86GHz', 'CPU': 4650, 'Total Ram': '8GB', '# of RAM': 8, 'Optical Drive': None, 'OS': 'Windows 11 Pro', 'Product Key': 'DWV28-BMNJF-QVP96-B2Y84-KBT6P', 'Notes': None}
-# fill_page(comp_data)
+comp_data = {'Serial #': 'PC1WVCJY', 'Hard Drive': 'AB01H-00000081552', 'Computer Barcode': 'AB01C-00000126030', 'Old COA': 'Windows 10 Pro', 'New COA': 3305659803308, 'Initials': 'CP', '#': 2, 'Type': 'Thinkpad X13 Gen 1', 'i Series': 'Xeon Quadcore 1.86GHz', 'CPU': 4650, 'Total Ram': '8GB', '# of RAM': 8, 'Optical Drive': "CD ROM", 'OS': 'Windows 11 Pro', 'Product Key': 'DWV28-BMNJF-QVP96-B2Y84-KBT6P', 'Notes': None}
+fill_page(comp_data)
