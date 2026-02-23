@@ -18,7 +18,6 @@ def get_entry_data(url, start, num):
         # Run the autofiller with the data passed to it
         run_automation(sheet_data)
         
-        
     else:
         messagebox.showerror("Data Error", "Could not fetch sheet. Check URL/Permissions.")
 
@@ -34,7 +33,7 @@ def gui_display():
 
     # Sheet url: label and text box
     ttk.Label(container, text="Google Sheet URL:").pack(anchor="w", pady=(0, 5))
-    sheet_var = tk.StringVar(value="https://docs.google.com/spreadsheets/d/1mARf98z1tTqTimLuweBU10VGqXJilK9cpAYh2CchmDo/edit?pli=1&gid=0#gid=0")
+    sheet_var = tk.StringVar(value="https://docs.google.com/spreadsheets/d/1JN4Cq0aqU9mL1KndfEY4a7F_cSZv3NWILeqjl3UO4uw/edit?gid=292262298#gid=292262298")
     ttk.Entry(container, textvariable=sheet_var, width=50).pack(fill="x", pady=(0, 15))
 
     row_frame = ttk.Frame(container)

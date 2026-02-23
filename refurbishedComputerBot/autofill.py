@@ -61,10 +61,7 @@ def fill_in_optical(driver, optical_type):
 
 
 
-def open_page():
-    # Initialize the WebDriver
-    driver = webdriver.Chrome()
-
+def open_page(driver):
     # Navigate to the home page
     driver.get("http://173.183.250.6:5014/MainPage.aspx")
     messagebox.showinfo("Good job", "Please login and navigate to the refurbished computers page")
@@ -80,16 +77,10 @@ def open_page():
         messagebox.showinfo("Login timed out.")
         return None, None
 
-    return driver, wait
+    return wait
 
     
-def fill_page(computer_data):
-    driver, wait = open_page()
-
-    # If open_page failed, quit the program
-    if not driver or not wait: 
-        return
-
+def fill_page(computer_data, driver, wait):
     # Fill text input fields
     hardDrive_field = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "hdBarcodes")))
     hardDrive_field.clear()
@@ -114,7 +105,6 @@ def fill_page(computer_data):
     numOfRam_field.send_keys(computer_data["# of RAM"])
 
     fill_in_optical(driver, computer_data["Optical Drive"])
-    # select_insensitive(opticalDrive_dropdown, "Unspecified")
 
     OS_dropdown = Select(driver.find_element(By.ID, "ContentPlaceHolder1_ddl_OS"))
     select_OS_insensitive(OS_dropdown, computer_data["OS"])
@@ -123,23 +113,39 @@ def fill_page(computer_data):
     newCOA_field.clear()
     newCOA_field.send_keys(computer_data["New COA"])
 
-    messagebox.showinfo("Finished?", "Review the information and press submit when ready.")
-
+    # messagebox.showinfo("Finished?", "Review the information and press submit when ready.")
     print("Form submitted successfully!")
-    sleep(10)
-    driver.quit()
 
 
 def run_automation(data_list):
     print(f"Processing {len(data_list)} rows...")
 
+    # Open up webdriver page
+    driver = webdriver.Chrome()
+    wait = open_page(driver)
+
+    # Cancel program if page is not opened properly
+    if not driver or not wait:
+        driver.quit()
+        return
+
     for index, row in enumerate(data_list):
         print(f"Filling row {index + 1}: {row}")
-        fill_page(row)
-    
-    messagebox.showinfo("Success", f"Finished entering {len(data_list)} computers!")
-    # driver.quit()
+        fill_page(row, driver, wait)
+
+        # Wait until user submits refurbished computer and goes to add a new one
+        # Then autofill the next computer on the sheet
+        wait.until(EC.element_to_be_clickable((By.ID, "ContentPlaceHolder1_Btn_NewComputer")))
+        print("Waiting for you to click 'New Computer' for the next entry...")
+        wait.until(lambda d: d.find_element(By.ID, "ContentPlaceHolder1_tbx_barcode").get_attribute("value") == "")
+        
+        print("Page cleared. Moving to next computer.")
+
+    # All computers have been entered by this point
+    print("Success", f"Finished entering {len(data_list)} computers!")
+    driver.quit()
 
 
-comp_data = {'Serial #': 'PC1WVCJY', 'Hard Drive': 'AB01H-00000081552', 'Computer Barcode': 'AB01C-00000126030', 'Old COA': 'Windows 10 Pro', 'New COA': 3305659803308, 'Initials': 'CP', '#': 2, 'Type': 'Thinkpad X13 Gen 1', 'i Series': 'Xeon Quadcore 1.86GHz', 'CPU': 4650, 'Total Ram': '8GB', '# of RAM': 8, 'Optical Drive': "CD ROM", 'OS': 'Windows 11 Pro', 'Product Key': 'DWV28-BMNJF-QVP96-B2Y84-KBT6P', 'Notes': None}
-fill_page(comp_data)
+# DEBUGGING
+# comp_data = {'Serial #': 'PC1WVCJY', 'Hard Drive': 'AB01H-00000081552', 'Computer Barcode': 'AB01C-00000126030', 'Old COA': 'Windows 10 Pro', 'New COA': 3305659803308, 'Initials': 'CP', '#': 2, 'Type': 'Thinkpad X13 Gen 1', 'i Series': 'Xeon Quadcore 1.86GHz', 'CPU': 4650, 'Total Ram': '8GB', '# of RAM': 8, 'Optical Drive': "CD ROM", 'OS': 'Windows 11 Pro', 'Product Key': 'DWV28-BMNJF-QVP96-B2Y84-KBT6P', 'Notes': None}
+# fill_page(comp_data)
