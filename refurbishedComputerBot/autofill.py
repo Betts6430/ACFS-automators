@@ -136,13 +136,17 @@ def run_automation(data_list):
         # Wait until user submits refurbished computer and goes to add a new one
         # Then autofill the next computer on the sheet
         wait.until(EC.element_to_be_clickable((By.ID, "ContentPlaceHolder1_Btn_NewComputer")))
+
+        if index >= len(data_list) - 1:
+            break
+
         print("Waiting for you to click 'New Computer' for the next entry...")
         wait.until(lambda d: d.find_element(By.ID, "ContentPlaceHolder1_tbx_barcode").get_attribute("value") == "")
         
         print("Page cleared. Moving to next computer.")
 
     # All computers have been entered by this point
-    print("Success", f"Finished entering {len(data_list)} computers!")
+    print(f"Success. Finished entering {len(data_list)} computers!")
     driver.quit()
 
 
