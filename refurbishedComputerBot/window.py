@@ -62,3 +62,12 @@ def gui_display():
 
 if __name__ == "__main__":
     gui_display()
+
+
+
+# TODO
+# Popup window at the end to show how many computers were successfully input
+# Auto-press "Enter a New Computer" button
+# Check if closing the window ends the program
+#   - If not, add a way to end program early
+#   - Also opening the edit a computer screen currently breaks program
