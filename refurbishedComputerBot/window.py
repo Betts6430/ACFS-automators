@@ -5,7 +5,7 @@ from data_collection import get_sheet_data
 from autofill import run_automation
 
 
-def get_entry_data(url, start, num):
+def get_entry_data(url, start, num, root):
     # Basic validation
     if not url or not start or not num:
         messagebox.showwarning("Input Error", "Please fill in all fields.")
@@ -16,7 +16,7 @@ def get_entry_data(url, start, num):
     
     if sheet_data:
         # Run the autofiller with the data passed to it
-        run_automation(sheet_data)
+        run_automation(sheet_data, root)
         
     else:
         messagebox.showerror("Data Error", "Could not fetch sheet. Check URL/Permissions.")
@@ -54,7 +54,7 @@ def gui_display():
     ttk.Spinbox(right_col, from_=1, to=100, textvariable=num_var, width=8).pack(anchor="w")
 
     # Run button
-    btn = ttk.Button(container, text='Run program',command=lambda: get_entry_data(sheet_var.get(), start_var.get(), num_var.get()))
+    btn = ttk.Button(container, text='Run program',command=lambda: get_entry_data(sheet_var.get(), start_var.get(), num_var.get(), root))
     btn.pack(pady=30, fill="x")
 
     root.mainloop()

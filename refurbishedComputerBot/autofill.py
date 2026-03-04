@@ -5,8 +5,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import WebDriverException
 
 from time import sleep
+import sys
 
 
 def select_insensitive(select_element, target_text):
@@ -117,7 +119,7 @@ def fill_page(computer_data, driver, wait):
     print("Form submitted successfully!")
 
 
-def run_automation(data_list):
+def run_automation(data_list, root_window):
     print(f"Processing {len(data_list)} rows...")
 
     # Open up webdriver page
@@ -130,10 +132,10 @@ def run_automation(data_list):
         driver.quit()
         return
 
-    for index, row in enumerate(data_list):
-        print(f"Filling row {index + 1}/{len(data_list)}: {row}")
+    try:
+        for index, row in enumerate(data_list):
+            print(f"Filling row {index + 1}/{len(data_list)}: {row}")
 
-        try:
             fill_page(row, driver, wait)
 
             # Wait until user submits refurbished computer and goes to add a new one
@@ -151,13 +153,17 @@ def run_automation(data_list):
             wait.until(lambda d: d.find_element(By.ID, "ContentPlaceHolder1_tbx_barcode").get_attribute("value") == "")
             print("Page cleared. Moving to next computer.")
 
-        except Exception as e:
-            messagebox.showerror("Error", f"Stopped at row {index + 1}: {e}")
-            break
+    except (WebDriverException, Exception) as e:
+        # This catches if the user closes the browser window manually
+        print(f"Browser closed or error occurred: {e}")
+    
+    finally:
+        # All computers have been entered by this point
+        messagebox.showinfo("Success", f"Finished entering {len(data_list)} computers!")
+        driver.quit()
 
-    # All computers have been entered by this point
-    messagebox.showinfo("Success", f"Finished entering {len(data_list)} computers!")
-    driver.quit()
+    root_window.destroy()
+    sys.exit()
 
 
 # DEBUGGING
