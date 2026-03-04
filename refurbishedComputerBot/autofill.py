@@ -27,18 +27,20 @@ def select_ram_insensitive(select_element, target_text):
             return True
     return False
 
-
 def select_OS_insensitive(select_element, target_text):
     """Fills in OS dropdown section by checking the input target_text
         Options include Chrome OS, Linux, No OS, Win 10 - MRRP, Win 11 - MRRP."""
     
     target = str(target_text).lower().strip()
 
-    if target == "no os" or target is None: select_insensitive(select_element, "No OS")
-    if "linux" in target: select_insensitive(select_element, "Linux")
-    if "chrome" in target: select_insensitive(select_element, "Chrome OS")
-    else:   select_insensitive(select_element, "Win 11 - MRRP")
-
+    if "no os" in target or "none" in target or not target:
+        select_insensitive(select_element, "No OS")
+    elif "linux" in target:
+        select_insensitive(select_element, "Linux")
+    elif "chrome" in target:
+        select_insensitive(select_element, "Chrome OS")
+    else:
+        select_insensitive(select_element, "Win 11 - MRRP")
 
 def fill_in_optical(driver, optical_type):
     """Fills in optical drive dropdown section by checking the input optical_type
@@ -60,11 +62,10 @@ def fill_in_optical(driver, optical_type):
 
 
 
-
 def open_page(driver):
     # Navigate to the home page
     driver.get("http://173.183.250.6:5014/MainPage.aspx")
-    messagebox.showinfo("Good job", "Please login and navigate to the refurbished computers page")
+    messagebox.showinfo("Action Required", "Please login and navigate to the refurbished computers page.")
 
     # Wait up to 5 minutes for the user to get to the refurbished computers page
     # If the page is reached, the Number of Hard Drives box will be detected
@@ -72,14 +73,13 @@ def open_page(driver):
         wait = WebDriverWait(driver, 300)
         wait.until(EC.presence_of_element_located((By.ID, "ContentPlaceHolder1_tbx_NumOfHardDrives")))
         print("Login detected! Starting the bot...")
+        return wait
 
     except:
         messagebox.showinfo("Login timed out.")
-        return None, None
+        return None
 
-    return wait
 
-    
 def fill_page(computer_data, driver, wait):
     # Fill text input fields
     hardDrive_field = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "hdBarcodes")))
@@ -111,9 +111,9 @@ def fill_page(computer_data, driver, wait):
 
     newCOA_field = driver.find_element(By.ID, "ContentPlaceHolder1_tbx_NewWindowsCOA")
     newCOA_field.clear()
-    newCOA_field.send_keys(computer_data["New COA"])
+    if "N/A" not in computer_data["New COA"]:
+        newCOA_field.send_keys(computer_data["New COA"])
 
-    # messagebox.showinfo("Finished?", "Review the information and press submit when ready.")
     print("Form submitted successfully!")
 
 
@@ -125,28 +125,38 @@ def run_automation(data_list):
     wait = open_page(driver)
 
     # Cancel program if page is not opened properly
-    if not driver or not wait:
+    if wait is None:
+        messagebox.showwarning("Timeout", "Login page not reached. Closing.")
         driver.quit()
         return
 
     for index, row in enumerate(data_list):
-        print(f"Filling row {index + 1}: {row}")
-        fill_page(row, driver, wait)
+        print(f"Filling row {index + 1}/{len(data_list)}: {row}")
 
-        # Wait until user submits refurbished computer and goes to add a new one
-        # Then autofill the next computer on the sheet
-        wait.until(EC.element_to_be_clickable((By.ID, "ContentPlaceHolder1_Btn_NewComputer")))
+        try:
+            fill_page(row, driver, wait)
 
-        if index >= len(data_list) - 1:
+            # Wait until user submits refurbished computer and goes to add a new one
+            # Then autofill the next computer on the sheet
+            new_computer_button = wait.until(EC.element_to_be_clickable((By.ID, "ContentPlaceHolder1_Btn_NewComputer")))
+
+            # If it's the last computer we stop here
+            if index >= len(data_list) - 1:
+                break
+
+            # Otherwise, move to next
+            new_computer_button.click()
+            
+            # Wait for next page to be cleared
+            wait.until(lambda d: d.find_element(By.ID, "ContentPlaceHolder1_tbx_barcode").get_attribute("value") == "")
+            print("Page cleared. Moving to next computer.")
+
+        except Exception as e:
+            messagebox.showerror("Error", f"Stopped at row {index + 1}: {e}")
             break
 
-        print("Waiting for you to click 'New Computer' for the next entry...")
-        wait.until(lambda d: d.find_element(By.ID, "ContentPlaceHolder1_tbx_barcode").get_attribute("value") == "")
-        
-        print("Page cleared. Moving to next computer.")
-
     # All computers have been entered by this point
-    print(f"Success. Finished entering {len(data_list)} computers!")
+    messagebox.showinfo("Success", f"Finished entering {len(data_list)} computers!")
     driver.quit()
 
 

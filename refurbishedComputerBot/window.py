@@ -33,7 +33,7 @@ def gui_display():
 
     # Sheet url: label and text box
     ttk.Label(container, text="Google Sheet URL:").pack(anchor="w", pady=(0, 5))
-    sheet_var = tk.StringVar(value="https://docs.google.com/spreadsheets/d/1JN4Cq0aqU9mL1KndfEY4a7F_cSZv3NWILeqjl3UO4uw/edit?gid=292262298#gid=292262298")
+    sheet_var = tk.StringVar(value="https://docs.google.com/spreadsheets/d/1mARf98z1tTqTimLuweBU10VGqXJilK9cpAYh2CchmDo/edit?gid=2018528710#gid=2018528710")
     ttk.Entry(container, textvariable=sheet_var, width=50).pack(fill="x", pady=(0, 15))
 
     row_frame = ttk.Frame(container)
@@ -43,14 +43,14 @@ def gui_display():
     left_col = ttk.Frame(row_frame)
     left_col.pack(side="left", expand=True)
     ttk.Label(left_col, text="Starting row:").pack(anchor="w")
-    start_var = tk.IntVar(value=5)
+    start_var = tk.IntVar(value=0)
     ttk.Spinbox(left_col, from_=1, to=10000, textvariable=start_var, width=8).pack(anchor="w")
 
     # Number of rows: label and spin box
     right_col = ttk.Frame(row_frame)
     right_col.pack(side="right", expand=True)
     ttk.Label(right_col, text="# of rows:").pack(anchor="w")
-    num_var = tk.IntVar(value=5)
+    num_var = tk.IntVar(value=10)
     ttk.Spinbox(right_col, from_=1, to=100, textvariable=num_var, width=8).pack(anchor="w")
 
     # Run button
@@ -66,8 +66,8 @@ if __name__ == "__main__":
 
 
 # TODO
-# Popup window at the end to show how many computers were successfully input
-# Auto-press "Enter a New Computer" button
+# \/ Popup window at the end to show how many computers were successfully input
+# \/ Auto-press "Enter a New Computer" button
 # Check if closing the window ends the program
 #   - If not, add a way to end program early
 #   - Also opening the edit a computer screen currently breaks program
