@@ -23,6 +23,7 @@ The following are things you probably shouldn't do when using the bot. Note that
 - The program wil time out after 5 minutes so don't take too long
 - Try not to stray too far in the automated browser
 
-
-### Credits
-Avery
+#
+#
+#
+Script by Avery
