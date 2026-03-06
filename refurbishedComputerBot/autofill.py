@@ -64,21 +64,32 @@ def fill_in_optical(driver, optical_type):
         opticalDrive_dropdown.select_by_visible_text("Unspecified")
 
 
-def enter_orders(data_list, driver, wait):
+def show_message(root, title, message):
+    root.wm_attributes("-topmost", 1)
+    messagebox.showinfo(title, message)
+    root.wm_attributes("-topmost", 0)
+
+
+def enter_orders(data_list, driver, wait, root):
     driver.get("http://173.183.250.6:5014/OrderPages/OrderList.aspx")
-    messagebox.showinfo("Action Required", "Please click the order you would like to enter the computers into.")
+    show_message(root, "Action Required", "Please click the order you would like to enter the computers into.")
 
     try:
-        wait.until(EC.presence_of_element_located((By.ID, "PLACEHOLDERTEXT")))
+        # wait.until(EC.presence_of_element_located((By.ID, "PLACEHOLDERTEXT")))
         print("Order page detected... Pasting computer barcodes.")
 
         barcode_field = wait.until(EC.presence_of_element_located((By.ID, "ContentPlaceHolder1_tbx_barcode")))
 
+        # Paste in each value
         for computer in data_list:
             barcode_field.clear()
             barcode_field.send_keys(computer["Computer Barcode"] + Keys.ENTER)
-            sleep(0.2)
+            sleep(0.1)
     
+        # Click update order button
+        sleep(0.3)
+        update_order_btn = wait.until(EC.element_to_be_clickable((By.ID, "ContentPlaceHolder1_btn_updateOrder")))
+        update_order_btn.click()
 
     except:
         messagebox.showinfo("Login timed out.")
@@ -179,11 +190,11 @@ def run_automation(data_list, root_window, order_entry):
     
     finally:
         if order_entry:
-            enter_orders(data_list, driver, wait)
+            enter_orders(data_list, driver, wait, root_window)
 
 
         # All computers have been entered by this point
-        messagebox.showinfo("Success", f"Finished entering {len(data_list)} computers!")
+        show_message(root_window, "Success", f"Finished entering {len(data_list)} computers!")
         driver.quit()
 
     root_window.destroy()
