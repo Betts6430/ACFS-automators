@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.common.keys import Keys
 
 from time import sleep
 import sys
@@ -63,6 +64,25 @@ def fill_in_optical(driver, optical_type):
         opticalDrive_dropdown.select_by_visible_text("Unspecified")
 
 
+def enter_orders(data_list, driver, wait):
+    driver.get("http://173.183.250.6:5014/OrderPages/OrderList.aspx")
+    messagebox.showinfo("Action Required", "Please click the order you would like to enter the computers into.")
+
+    try:
+        wait.until(EC.presence_of_element_located((By.ID, "PLACEHOLDERTEXT")))
+        print("Order page detected... Pasting computer barcodes.")
+
+        barcode_field = wait.until(EC.presence_of_element_located((By.ID, "ContentPlaceHolder1_tbx_barcode")))
+
+        for computer in data_list:
+            barcode_field.clear()
+            barcode_field.send_keys(computer["Computer Barcode"] + Keys.ENTER)
+            sleep(0.2)
+    
+
+    except:
+        messagebox.showinfo("Login timed out.")
+
 
 def open_page(driver):
     # Navigate to the home page
@@ -119,7 +139,7 @@ def fill_page(computer_data, driver, wait):
     print("Form submitted successfully!")
 
 
-def run_automation(data_list, root_window):
+def run_automation(data_list, root_window, order_entry):
     print(f"Processing {len(data_list)} rows...")
 
     # Open up webdriver page
@@ -158,6 +178,10 @@ def run_automation(data_list, root_window):
         print(f"Browser closed or error occurred: {e}")
     
     finally:
+        if order_entry:
+            enter_orders(data_list, driver, wait)
+
+
         # All computers have been entered by this point
         messagebox.showinfo("Success", f"Finished entering {len(data_list)} computers!")
         driver.quit()

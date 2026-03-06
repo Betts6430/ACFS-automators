@@ -5,7 +5,7 @@ from data_collection import get_sheet_data
 from autofill import run_automation
 
 
-def get_entry_data(url, start, num, root):
+def get_entry_data(url, start, num, root, order_entry):
     # Basic validation
     if not url or not start or not num:
         messagebox.showwarning("Input Error", "Please fill in all fields.")
@@ -16,7 +16,7 @@ def get_entry_data(url, start, num, root):
     
     if sheet_data:
         # Run the autofiller with the data passed to it
-        run_automation(sheet_data, root)
+        run_automation(sheet_data, root, order_entry)
         
     else:
         messagebox.showerror("Data Error", "Could not fetch sheet. Check URL/Permissions.")
@@ -25,7 +25,6 @@ def get_entry_data(url, start, num, root):
 def gui_display():
     root = tk.Tk()
     root.title("Refurbished Computers Entering Bot")
-    root.geometry("400x350")
     root.resizable(False, False)
 
     container = ttk.Frame(root, padding="20")
@@ -53,9 +52,14 @@ def gui_display():
     num_var = tk.IntVar(value=10)
     ttk.Spinbox(right_col, from_=1, to=100, textvariable=num_var, width=8).pack(anchor="w")
 
+    # Order entry check box
+    order_entry_var = tk.IntVar()
+    check_btn = ttk.Checkbutton(container, text="Auto-enter into order?", variable=order_entry_var)
+    check_btn.pack(pady=25)
+
     # Run button
-    btn = ttk.Button(container, text='Run program',command=lambda: get_entry_data(sheet_var.get(), start_var.get(), num_var.get(), root))
-    btn.pack(pady=30, fill="x")
+    btn = ttk.Button(container, text='Run program',command=lambda: get_entry_data(sheet_var.get(), start_var.get(), num_var.get(), root, order_entry_var.get()))
+    btn.pack(pady=5, fill="x")
 
     root.mainloop()
 
