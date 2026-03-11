@@ -20,7 +20,7 @@ def get_entry_data(url, start, num, root, order_entry):
         
     else:
         # Add error message label to window
-        ttk.Label(root, text=error_message, foreground='red').pack(pady=5)
+        ttk.Label(root, text=error_message, foreground='red').pack()
 
 
 def gui_display():

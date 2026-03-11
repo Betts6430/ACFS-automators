@@ -35,12 +35,12 @@ def get_sheet_data(url, start_row, num_rows):
     # Check if any cells are unfilled on the spreadsheet
     row = 1
     valid_data = True
-    error_message = None
+    error_message = ""
 
     for comp_data in data_list:
         for category, data in comp_data.items():
             if len(data) == 0: # Append to error_message all errors instead of just one
-                error_message = f"Error: Missing Data - Row {row}, {category}"
+                error_message += f"Error: Missing Data - Row {row}, {category}" + (row!=1)*"\n"
                 valid_data = False
         
         row += 1
