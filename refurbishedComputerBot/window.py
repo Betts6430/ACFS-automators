@@ -12,14 +12,15 @@ def get_entry_data(url, start, num, root, order_entry):
         return
 
     # Fetch the data from the google sheet
-    sheet_data = get_sheet_data(url, start, num)
+    sheet_data, valid_data, error_message = get_sheet_data(url, start, num)
     
-    if sheet_data:
+    if valid_data:
         # Run the autofiller with the data passed to it
         run_automation(sheet_data, root, order_entry)
         
     else:
-        messagebox.showerror("Data Error", "Could not fetch sheet. Check URL/Permissions.")
+        # Add error message label to window
+        ttk.Label(root, text=error_message, foreground='red').pack(pady=5)
 
 
 def gui_display():
@@ -54,6 +55,7 @@ def gui_display():
 
     # Order entry check box
     order_entry_var = tk.IntVar()
+    order_entry_var.set(1)
     check_btn = ttk.Checkbutton(container, text="Auto-enter into order?", variable=order_entry_var)
     check_btn.pack(pady=25)
 

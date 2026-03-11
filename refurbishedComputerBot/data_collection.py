@@ -32,11 +32,24 @@ def get_sheet_data(url, start_row, num_rows):
         data_list = list(csv.DictReader(data_lines, fieldnames=headers))
 
     # Validate data
-    # Check if any serial numbers are NaN. If so, return "Error: Line i read incorrectly."
+    # Check if any cells are unfilled on the spreadsheet
+    row = 1
+    valid_data = True
+    error_message = None
 
-    return data_list
+    for comp_data in data_list:
+        for category, data in comp_data.items():
+            if len(data) == 0: # Append to error_message all errors instead of just one
+                error_message = f"Error: Missing Data - Row {row}, {category}"
+                valid_data = False
+        
+        row += 1
+
+
+    return data_list, valid_data, error_message
 
 # DEBUGGING
-# data = get_sheet_data('https://docs.google.com/spreadsheets/d/1JN4Cq0aqU9mL1KndfEY4a7F_cSZv3NWILeqjl3UO4uw/edit?gid=292262298#gid=292262298', 230, 5)
+# data, valid = get_sheet_data('https://docs.google.com/spreadsheets/d/1mARf98z1tTqTimLuweBU10VGqXJilK9cpAYh2CchmDo/edit?gid=2018528710#gid=2018528710', 50, 10)
 # print(data)
+# print(valid)
 

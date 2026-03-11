@@ -95,10 +95,10 @@ def enter_orders(data_list, driver, wait, root):
         messagebox.showinfo("Login timed out.")
 
 
-def open_page(driver):
+def open_page(driver, root):
     # Navigate to the home page
     driver.get("http://173.183.250.6:5014/MainPage.aspx")
-    messagebox.showinfo("Action Required", "Please login and navigate to the refurbished computers page.")
+    show_message(root, "Action Required", "Please login and navigate to the refurbished computers page.")
 
     # Wait up to 5 minutes for the user to get to the refurbished computers page
     # If the page is reached, the Number of Hard Drives box will be detected
@@ -155,7 +155,7 @@ def run_automation(data_list, root_window, order_entry):
 
     # Open up webdriver page
     driver = webdriver.Chrome()
-    wait = open_page(driver)
+    wait = open_page(driver, root_window)
 
     # Cancel program if page is not opened properly
     if wait is None:
