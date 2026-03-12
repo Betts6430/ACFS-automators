@@ -6,13 +6,7 @@ import subprocess
 import os
 import tempfile
 import sys
-import json
-from dotenv import load_dotenv
-
-load_dotenv()
-key_data = os.getenv('json_creds')#json.loads(os.environ['json_creds'])
-creds_dict = json.loads(key_data)
-
+import time
 
 global new_id
 new_id= None
@@ -58,14 +52,15 @@ def delete_copy(drive_service, NEW_TEMPLATE_ID):
     ).execute()
 
 
+
 def script_init(create_new_copy):
     # setup
     SCOPES = ['https://www.googleapis.com/auth/documents', 'https://www.googleapis.com/auth/drive']
-    #SERVICE_ACCOUNT_FILE = json.loads(json_creds)#get_resource_path(key_data)
+    SERVICE_ACCOUNT_FILE = get_resource_path('order-label-automation-35287e3b7178.json')
     TEMPLATE_ID = '1A9jLX_9FuJDY4N2TOMyf_rIZlcpeE4Yk6SE-l-QslaY'
 
     # authentication
-    creds = service_account.Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
+    creds = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
     # run
     docs_service = build('docs', 'v1', credentials=creds)
@@ -86,6 +81,12 @@ def script_init(create_new_copy):
 
     print("Authentication Successful")
     return docs_service, TEMPLATE_ID, drive_service, content
+
+
+def get_resource_path(filename):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, filename)
+    return os.path.join(os.path.abspath("."), filename)
 
 
 def send(inputs, input_field_box, window, labels, packing_info, current_box):

@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="877e256b-c4a1-4aac-8c56-3db5ed0af1ad" name="Changes" comment="" />
+    <list default="true" id="877e256b-c4a1-4aac-8c56-3db5ed0af1ad" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/ACFS-automators.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/orderLabelLarry/order-label-automation-35287e3b7178.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orderLabelLarry/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,9 +33,10 @@
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/iqbal/OneDrive/Documents/GitHub/ACFS-automators",
+    "last_opened_file_path": "C:/Users/iqbal/OneDrive/Documents/GitHub/ACFS-automators/orderLabelLarry",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -63,6 +70,7 @@
       <updated>1773335355716</updated>
       <workItem from="1773335357884" duration="3154000" />
       <workItem from="1773339981866" duration="9148000" />
+      <workItem from="1773353819288" duration="309000" />
     </task>
     <servers />
   </component>
