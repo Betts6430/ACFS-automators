@@ -10,7 +10,8 @@ import json
 from dotenv import load_dotenv
 
 load_dotenv()
-key_data = json.loads(os.environ['json_creds'])
+key_data = os.getenv('json_creds')#json.loads(os.environ['json_creds'])
+creds_dict = json.loads(key_data)
 
 
 global new_id
@@ -64,7 +65,7 @@ def script_init(create_new_copy):
     TEMPLATE_ID = '1A9jLX_9FuJDY4N2TOMyf_rIZlcpeE4Yk6SE-l-QslaY'
 
     # authentication
-    creds = service_account.Credentials.from_service_account_info(key_data, scopes=SCOPES)
+    creds = service_account.Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
 
     # run
     docs_service = build('docs', 'v1', credentials=creds)
