@@ -28,7 +28,7 @@ def get_sheet_data(url, start_row, num_rows):
     data_range = f"A{start_row}:P{start_row + num_rows - 1}"
     data_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&gid={gid}&range={data_range}"
     with urllib.request.urlopen(data_url) as f:
-        data_lines = f.read().decode('utf-8').splitlines()
+        data_lines = f.read().decode('utf-8').strip().splitlines()
         data_list = list(csv.DictReader(data_lines, fieldnames=headers))
 
     # Validate data
@@ -49,7 +49,7 @@ def get_sheet_data(url, start_row, num_rows):
     return data_list, valid_data, error_message
 
 # DEBUGGING
-# data, valid = get_sheet_data('https://docs.google.com/spreadsheets/d/1mARf98z1tTqTimLuweBU10VGqXJilK9cpAYh2CchmDo/edit?gid=2018528710#gid=2018528710', 50, 10)
+# data, valid, _ = get_sheet_data('https://docs.google.com/spreadsheets/d/1mARf98z1tTqTimLuweBU10VGqXJilK9cpAYh2CchmDo/edit?gid=2018528710#gid=2018528710', 5, 10)
 # print(data)
 # print(valid)
 
