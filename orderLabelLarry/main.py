@@ -56,7 +56,7 @@ def delete_copy(drive_service, NEW_TEMPLATE_ID):
 def script_init(create_new_copy):
     # setup
     SCOPES = ['https://www.googleapis.com/auth/documents', 'https://www.googleapis.com/auth/drive']
-    SERVICE_ACCOUNT_FILE = get_resource_path('order-label-automation-5683b8ee797e.json')
+    SERVICE_ACCOUNT_FILE = get_resource_path('order-label-automation-35287e3b7178.json')
     TEMPLATE_ID = '1A9jLX_9FuJDY4N2TOMyf_rIZlcpeE4Yk6SE-l-QslaY'
 
     # authentication
