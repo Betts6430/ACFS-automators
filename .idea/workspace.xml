@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="877e256b-c4a1-4aac-8c56-3db5ed0af1ad" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/main.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/main.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/dist/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/dist/main.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/main.spec" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/main.spec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/order-label-automation-5683b8ee797e.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/orderLabelLarry/dist/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/dist/orderLabelLarry.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +67,7 @@
       <updated>1773335355716</updated>
       <workItem from="1773335357884" duration="3154000" />
       <workItem from="1773339981866" duration="9148000" />
-      <workItem from="1773353819288" duration="1499000" />
+      <workItem from="1773353819288" duration="1879000" />
     </task>
     <servers />
   </component>
