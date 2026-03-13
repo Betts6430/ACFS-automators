@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="877e256b-c4a1-4aac-8c56-3db5ed0af1ad" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/dist/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/dist/orderLabelLarry.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script1_V2_package/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/COAlition/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script1_V2_package/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/COAlition/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +68,7 @@
       <updated>1773335355716</updated>
       <workItem from="1773335357884" duration="3154000" />
       <workItem from="1773339981866" duration="9148000" />
-      <workItem from="1773353819288" duration="1879000" />
+      <workItem from="1773353819288" duration="3291000" />
     </task>
     <servers />
   </component>
