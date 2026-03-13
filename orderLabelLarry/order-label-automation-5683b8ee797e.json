@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "order-label-automation",
+  "private_key_id": "5683b8ee797e04a44084c0968322122d5924c028",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDTQ/S2a1Cm+P1x\ny9azOxDTDnZd+mKYedT+KO+VJzJUzVSUOgbGQ8e6i5Ykei+xRt/Zqas/C7aTtde8\nyUpUXfl2xWkCYrHe+azcm/Sice9hKdQ7VPtQDSydlZY1IoyfWbHkhpIDRPBSJkfc\nKk6na7K6VfYsOrgq+fYcxh+HL5uc+HbXaPAW5wtNQmMLpnbWd5CoO/DDPrQLOz2/\nPtpelSRE4kY+V56wJgGjKP4eEkMG55ni5X1x226i9MHGL/hPGWCHO81sae7BkStU\ndKkabyFE8+MuujC6lwhDimL5eHN+mWki5sWoiJauS6KPHkbGTFMOoFymhAqqeUzD\n1kBTBwpzAgMBAAECggEABI5MNrjaR1eDWP19KIKjn9ptJ5aphmyRuB2fUekKpVFn\nHwaDwsYBTcl8QshWpmXcX1/7eAOG7ZO/B2yTmbZ9wDQbERxE98yarE9yqSQi2cZ+\n3m6uG5wadCWCRpAP5JgKofrqCtU6eUTR9ACpVlW0ubRL21cYKRH8F8NP/73sBv3l\ngxU3hpcko7hn+N8LPag8rvJGIFcP0blaxuZQxT8TyLgXp1Z7LpVN/6b/jADfawsm\nvkLrYo9nfAvxRzgUIyQMIOxJAN9vOVoXiEp2okS4mioDkFLdGDU3ASeEUOrnKqkw\nIgS7psUJMuzebezq1gd212B1s407NlnRbkdIF4NwdQKBgQD7Z6f9Yx/gVS8+1i8R\n8NUfxwUoQfGpqpw7b9Q0a8ItS3ZeBr1Vka3FBDJDMlp8uYKPETOjJaz1btFUDA51\nfM/cCrOC7aiGBJEf3rVbPvjrqI4QpYqWv8fZNbTOuh6YYe/eBcEr8uNSXqjmE/dt\n4crTFJHJMjgLn/U1jLPrWLiWVwKBgQDXIHvk65aueHvvk/Kb3dRVWoZM21+g9ohb\nO9Ol4H8ICcv2z8Fbl/dXaDrpwUkVJKqB7IOdluY9unyHz+IrI/e27dSYGECFaDMy\ngbFzV1369naYzVFHKoDpz+akR7Q/zcCOJU/3XjtqsxGeqRkqAyy4VG5dRX6gjVK6\nxD5Kh2iDRQKBgQCKgV8RwGytYQD4c3PXRIGGUlVLCpmjSfVs4X1drAh8f9ikkL36\nyJmds2QllTY5BNMjEu0J8xXI2dbFoSbOH4c8yUCA34I644U4s6/ip1zoKCKslSc3\nSk1GI8qLIgr9FOfbv/vexJ/sn24Z4+IrTXw6slhnKh2qeePULsJo5KY9XQKBgBQ4\naWzK+A7OJFgQf+1GnH6pU5ZFyGdIxOhOZ0ZgI5CN2y4HuRTy47zDf0YZdNUX7S7p\nHDXjySBkNvBNCeUkLFR1ZlYlcWsYsDc/GX7N53d/UwZpxgn6ZMOVVwh59OdKX578\nwtdtdAhDbJSNMGBSjBGHXhhGP/C3V99WMsSulZRBAoGAUxhioTivrxn5Gb7JpLb2\ni6kt7rmVLLrDXyDQLVlgQNBhs4sNHINiRRNZotb+cKwARxcrsh0im18Tt8mW7D7j\nkDjaldX5+NnYCLGk+3G484BYRi5hrJ/l8YcEN8naE9xAsXU+kE2GFz0xDa+WCHEp\nIRf5zYw/cYHVUmJXoj/Ihv8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "autoprint-ordersheet-service@order-label-automation.iam.gserviceaccount.com",
+  "client_id": "117296033316986757025",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/autoprint-ordersheet-service%40order-label-automation.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
