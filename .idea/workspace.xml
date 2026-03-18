@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="877e256b-c4a1-4aac-8c56-3db5ed0af1ad" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/Analysis-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/EXE-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/PKG-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/PYZ-00.pyz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/PYZ-00.toc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/main.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/main.pkg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/warn-main.txt" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/warn-main.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/build/main/xref-main.html" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/build/main/xref-main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orderLabelLarry/dist/main.exe" beforeDir="false" afterPath="$PROJECT_DIR$/orderLabelLarry/dist/main.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script1_V2_package/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/COAlition/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script1_V2_package/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/COAlition/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +68,7 @@
       <updated>1773335355716</updated>
       <workItem from="1773335357884" duration="3154000" />
       <workItem from="1773339981866" duration="9148000" />
-      <workItem from="1773353819288" duration="749000" />
+      <workItem from="1773353819288" duration="3291000" />
     </task>
     <servers />
   </component>
