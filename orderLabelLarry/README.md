@@ -16,6 +16,9 @@ Upon running the script, a window will pop up requesting the following informati
 - Box or a pallet
 - Current and total box/pallet # (eg. Pallet 1 of 2)
 
+<img width="323" height="446" alt="image" src="https://github.com/user-attachments/assets/86d1acef-f7e1-45b8-9c11-d09025e6189f" />
+
+
 Simply input this information and click 'Send.' The script will format the sheet and print it at the default printer location. Afterwards, a prompt will appear asking whether the user would like to repeat the process and complete another order form. Click 'Yes' to continue, or 'No' to exit the program. 
 
 
