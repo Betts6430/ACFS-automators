@@ -5,7 +5,12 @@ from data_collection import get_sheet_data
 from autofill import run_automation
 
 
-def get_entry_data(url, start, num, root, order_entry):
+def get_entry_data(url, start, num, root, order_entry, error_label_ref):
+    # Clear previous error message if it exists
+    if error_label_ref[0] is not None:
+        error_label_ref[0].destroy()
+        error_label_ref[0] = None
+
     # Basic validation
     if not url or not start or not num:
         messagebox.showwarning("Input Error", "Please fill in all fields.")
@@ -20,7 +25,8 @@ def get_entry_data(url, start, num, root, order_entry):
         
     else:
         # Add error message label to window
-        ttk.Label(root, text=error_message, foreground='red').pack()
+        error_label_ref[0] = ttk.Label(root, text=error_message, foreground='red')
+        error_label_ref[0].pack()
 
 
 def gui_display():
@@ -59,8 +65,10 @@ def gui_display():
     check_btn = ttk.Checkbutton(container, text="Auto-enter into order?", variable=order_entry_var)
     check_btn.pack(pady=25)
 
+    error_label_ref = [None]
+
     # Run button
-    btn = ttk.Button(container, text='Run program',command=lambda: get_entry_data(sheet_var.get(), start_var.get(), num_var.get(), root, order_entry_var.get()))
+    btn = ttk.Button(container, text='Run program',command=lambda: get_entry_data(sheet_var.get(), start_var.get(), num_var.get(), root, order_entry_var.get(), error_label_ref))
     btn.pack(pady=5, fill="x")
 
     root.mainloop()
