@@ -4,12 +4,14 @@
 ### Description
 Autofills computer information when entering new refurbished computers by reading from the Google Sheet. Once all computers are entered, the bot can optionally auto-enter them into an order.
 
+#
 
 ### Setup
 Before running the program, make sure `config.ini` is in the same folder as the script. This file contains the URLs the bot uses and can be edited with any text editor. Open it up and update the values if any URLs or IPs have changed.
 
 > **Note:** `config.ini` contains sensitive information and should not be shared or committed to version control.
 
+#
 
 ### How to use it
 Upon running the application, a window will pop up. Enter the following information:
@@ -26,6 +28,7 @@ If **auto-enter into order** is enabled, the bot will prompt you to select an or
 
 After everything is complete, the program will shut down on its own.
 
+#
 
 ### What not to do
 Note that if the bot ever malfunctions, it will shut down or stop working. In both cases you can just close everything and start it back up again.
@@ -35,11 +38,10 @@ Note that if the bot ever malfunctions, it will shut down or stop working. In bo
 - Try not to stray too far in the automated browser.
 - Closing the browser window manually will cancel the automation.
 
-
+#
 
 ### Changing URLs and IPs
 Open `config.ini` in any text editor (Notepad works fine). Each setting has a comment above it explaining what it's for. Change the value after the `=` sign, save the file, and restart the bot.
-
 
 #
 
