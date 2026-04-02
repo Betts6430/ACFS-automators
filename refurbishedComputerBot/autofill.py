@@ -9,6 +9,7 @@ from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 
 from time import sleep
+import threading
 import sys
 
 
@@ -65,9 +66,25 @@ def fill_in_optical(driver, optical_type):
 
 
 def show_message(root, title, message):
-    root.wm_attributes("-topmost", 1)
-    messagebox.showinfo(title, message)
-    root.wm_attributes("-topmost", 0)
+    """Thread-safe blocking messagebox. Can be called from any thread."""
+    done = threading.Event()
+    def _show():
+        root.wm_attributes("-topmost", 1)
+        messagebox.showinfo(title, message)
+        root.wm_attributes("-topmost", 0)
+        done.set()
+    root.after(0, _show)
+    done.wait()
+
+
+def show_warning(root, title, message):
+    """Thread-safe blocking warning messagebox."""
+    done = threading.Event()
+    def _show():
+        messagebox.showwarning(title, message)
+        done.set()
+    root.after(0, _show)
+    done.wait()
 
 
 def enter_orders(data_list, driver, wait, root):
@@ -75,7 +92,6 @@ def enter_orders(data_list, driver, wait, root):
     show_message(root, "Action Required", "Please click the order you would like to enter the computers into.")
 
     try:
-        # wait.until(EC.presence_of_element_located((By.ID, "PLACEHOLDERTEXT")))
         print("Order page detected... Pasting computer barcodes.")
 
         barcode_field = wait.until(EC.presence_of_element_located((By.ID, "ContentPlaceHolder1_tbx_barcode")))
@@ -91,8 +107,9 @@ def enter_orders(data_list, driver, wait, root):
         update_order_btn = wait.until(EC.element_to_be_clickable((By.ID, "ContentPlaceHolder1_btn_updateOrder")))
         update_order_btn.click()
 
-    except:
-        messagebox.showinfo("Login timed out.")
+    except Exception as e:
+        print(f"Error entering orders: {e}")
+        show_warning(root, "Error", f"Failed to enter orders: {e}")
 
 
 def open_page(driver, root):
@@ -108,8 +125,9 @@ def open_page(driver, root):
         print("Login detected! Starting the bot...")
         return wait
 
-    except:
-        messagebox.showinfo("Login timed out.")
+    except Exception as e:
+        print(f"Login timed out: {e}")
+        show_warning(root, "Timeout", "Login timed out.")
         return None
 
 
@@ -150,16 +168,18 @@ def fill_page(computer_data, driver, wait):
     print("Form submitted successfully!")
 
 
-def run_automation(data_list, root_window, order_entry):
+def run_automation(data_list, root_window, order_entry, status_label=None):
     print(f"Processing {len(data_list)} rows...")
 
     # Open up webdriver page
     driver = webdriver.Chrome()
+    if status_label:
+        root_window.after(0, lambda: status_label.config(text="Browser is open"))
     wait = open_page(driver, root_window)
 
     # Cancel program if page is not opened properly
     if wait is None:
-        messagebox.showwarning("Timeout", "Login page not reached. Closing.")
+        show_warning(root_window, "Timeout", "Login page not reached. Closing.")
         driver.quit()
         return
 
@@ -184,23 +204,22 @@ def run_automation(data_list, root_window, order_entry):
             wait.until(lambda d: d.find_element(By.ID, "ContentPlaceHolder1_tbx_barcode").get_attribute("value") == "")
             print("Page cleared. Moving to next computer.")
 
-    except (WebDriverException, Exception) as e:
-        # This catches if the user closes the browser window manually
-        print(f"Browser closed or error occurred: {e}")
+    except WebDriverException:
+        print("Browser window closed manually.")
+        show_warning(root_window, "Cancelled", "Browser window closed manually.")
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        show_warning(root_window, "Error", f"An error occurred: {e}")
     
-    finally:
+    else:
+        # Only enter orders and show success if automation completed without errors
         if order_entry:
             enter_orders(data_list, driver, wait, root_window)
-
-
-        # All computers have been entered by this point
         show_message(root_window, "Success", f"Finished entering {len(data_list)} computers!")
+
+    finally:
         driver.quit()
-
-    root_window.destroy()
-    sys.exit()
-
-
-# DEBUGGING
-# comp_data = {'Serial #': 'PC1WVCJY', 'Hard Drive': 'AB01H-00000081552', 'Computer Barcode': 'AB01C-00000126030', 'Old COA': 'Windows 10 Pro', 'New COA': 3305659803308, 'Initials': 'CP', '#': 2, 'Type': 'Thinkpad X13 Gen 1', 'i Series': 'Xeon Quadcore 1.86GHz', 'CPU': 4650, 'Total Ram': '8GB', '# of RAM': 8, 'Optical Drive': "CD ROM", 'OS': 'Windows 11 Pro', 'Product Key': 'DWV28-BMNJF-QVP96-B2Y84-KBT6P', 'Notes': None}
-# fill_page(comp_data)
+        try:
+            root_window.after(0, root_window.destroy)
+        except Exception:
+            pass
