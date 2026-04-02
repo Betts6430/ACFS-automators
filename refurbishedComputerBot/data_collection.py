@@ -49,7 +49,7 @@ def get_sheet_data(url, start_row, num_rows):
     return data_list, valid_data, error_message
 
 # DEBUGGING
-# data, valid, _ = get_sheet_data('https://docs.google.com/spreadsheets/d/1mARf98z1tTqTimLuweBU10VGqXJilK9cpAYh2CchmDo/edit?gid=209298323#gid=209298323', 147, 7)
+# data, valid, _ = get_sheet_data('', 147, 7)
 # print(data)
 # print(valid)
 

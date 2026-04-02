@@ -10,7 +10,8 @@ from selenium.webdriver.common.keys import Keys
 
 from time import sleep
 import threading
-import sys
+
+from config import ORDER_LIST_URL, MAIN_PAGE_URL
 
 
 def select_insensitive(select_element, target_text):
@@ -88,7 +89,7 @@ def show_warning(root, title, message):
 
 
 def enter_orders(data_list, driver, wait, root):
-    driver.get("http://173.183.250.6:5014/OrderPages/OrderList.aspx")
+    driver.get(ORDER_LIST_URL)
     show_message(root, "Action Required", "Please click the order you would like to enter the computers into.")
 
     try:
@@ -114,7 +115,7 @@ def enter_orders(data_list, driver, wait, root):
 
 def open_page(driver, root):
     # Navigate to the home page
-    driver.get("http://173.183.250.6:5014/MainPage.aspx")
+    driver.get(MAIN_PAGE_URL)
     show_message(root, "Action Required", "Please login and navigate to the refurbished computers page.")
 
     # Wait up to 5 minutes for the user to get to the refurbished computers page
@@ -168,13 +169,13 @@ def fill_page(computer_data, driver, wait):
     print("Form submitted successfully!")
 
 
-def run_automation(data_list, root_window, order_entry, status_label=None):
+def run_automation(data_list, root_window, order_entry, status=None):
     print(f"Processing {len(data_list)} rows...")
 
     # Open up webdriver page
     driver = webdriver.Chrome()
-    if status_label:
-        root_window.after(0, lambda: status_label.config(text="Browser is open"))
+    if status:
+        root_window.after(0, lambda: status.stop("Browser is open"))
     wait = open_page(driver, root_window)
 
     # Cancel program if page is not opened properly

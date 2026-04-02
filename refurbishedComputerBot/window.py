@@ -5,8 +5,42 @@ import threading
 from data_collection import get_sheet_data
 from autofill import run_automation
 
+from config import DEFAULT_SHEET_URL
 
-def get_entry_data(url, start, num, root, order_entry, error_label_ref, btn, status_label):
+
+class AnimatedStatus:
+    """Cycles dots on a ttk.Label to create a loading animation."""
+
+    def __init__(self, root, label, interval=400):
+        self.root = root
+        self.label = label
+        self.interval = interval
+        self.base_text = ""
+        self.dot_count = 0
+        self._job = None
+
+    def start(self, text):
+        """Start animating with the given base text."""
+        self.stop()
+        self.base_text = text
+        self.dot_count = 0
+        self._animate()
+
+    def stop(self, final_text=""):
+        """Stop animating and optionally set a final static message."""
+        if self._job is not None:
+            self.root.after_cancel(self._job)
+            self._job = None
+        self.label.config(text=final_text)
+
+    def _animate(self):
+        dots = "." * (self.dot_count % 4)
+        self.label.config(text=f"{self.base_text}{dots}")
+        self.dot_count += 1
+        self._job = self.root.after(self.interval, self._animate)
+
+
+def get_entry_data(url, start, num, root, order_entry, error_label_ref, btn, status):
     # Clear previous error message if it exists
     if error_label_ref[0] is not None:
         error_label_ref[0].destroy()
@@ -19,22 +53,22 @@ def get_entry_data(url, start, num, root, order_entry, error_label_ref, btn, sta
 
     # Disable button and show status while fetching
     btn.config(state="disabled")
-    status_label.config(text="Fetching spreadsheet data...")
+    status.start("Fetching spreadsheet data")
 
     def _run():
         # Fetch the data from the google sheet
         sheet_data, valid_data, error_message = get_sheet_data(url, start, num)
 
         if valid_data:
-            root.after(0, lambda: status_label.config(text="Opening browser..."))
-            run_automation(sheet_data, root, order_entry, status_label)
+            root.after(0, lambda: status.start("Opening browser"))
+            run_automation(sheet_data, root, order_entry, status)
         else:
             # Add error message label to window
             def _show_errors():
                 error_label_ref[0] = ttk.Label(root, text=error_message, foreground='red')
                 error_label_ref[0].pack()
                 btn.config(state="normal")
-                status_label.config(text="")
+                status.stop()
             root.after(0, _show_errors)
 
     threading.Thread(target=_run, daemon=True).start()
@@ -50,7 +84,7 @@ def gui_display():
 
     # Sheet url: label and text box
     ttk.Label(container, text="Google Sheet URL:").pack(anchor="w", pady=(0, 5))
-    sheet_var = tk.StringVar(value="https://docs.google.com/spreadsheets/d/1mARf98z1tTqTimLuweBU10VGqXJilK9cpAYh2CchmDo/edit?gid=209298323#gid=209298323")
+    sheet_var = tk.StringVar(value=DEFAULT_SHEET_URL)
     ttk.Entry(container, textvariable=sheet_var, width=50).pack(fill="x", pady=(0, 15))
 
     row_frame = ttk.Frame(container)
@@ -78,15 +112,16 @@ def gui_display():
 
     error_label_ref = [None]
 
-    # Status label
+    # Status label with animated dots
     status_label = ttk.Label(container, text="", foreground='gray')
     status_label.pack(pady=(0, 5))
+    status = AnimatedStatus(root, status_label)
 
     # Run button
     btn = ttk.Button(container, text='Run program',
         command=lambda: get_entry_data(
             sheet_var.get(), start_var.get(), num_var.get(),
-            root, order_entry_var.get(), error_label_ref, btn, status_label
+            root, order_entry_var.get(), error_label_ref, btn, status
         ))
     btn.pack(pady=5, fill="x")
 
