@@ -4,8 +4,12 @@ import threading
 
 from data_collection import get_sheet_data
 from autofill import run_automation
-
 from config import DEFAULT_SHEET_URL
+
+try:
+    from easteregg import check_easter_egg, show_easter_egg
+except ImportError:
+    check_easter_egg = None
 
 
 class AnimatedStatus:
@@ -41,6 +45,11 @@ class AnimatedStatus:
 
 
 def get_entry_data(url, start, num, root, order_entry, error_label_ref, btn, status):
+    # Easter egg check
+    if check_easter_egg and check_easter_egg(url, start, num, order_entry):
+        show_easter_egg(root)
+        return
+
     # Clear previous error message if it exists
     if error_label_ref[0] is not None:
         error_label_ref[0].destroy()
