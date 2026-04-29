@@ -174,6 +174,7 @@ def run_automation(data_list, root_window, order_entry, status=None):
 
     # Open up webdriver page
     driver = webdriver.Chrome()
+    driver.set_page_load_timeout(30)
     if status:
         root_window.after(0, lambda: status.stop("Browser is open"))
     wait = open_page(driver, root_window)

@@ -16,8 +16,7 @@ def parse_url(url):
 def get_sheet_data(url, start_row, num_rows):
     sheet_id, gid = parse_url(url)
     if not sheet_id or not gid:
-        print("Error")
-        return None
+        return [], False, "Error: Could not parse the Google Sheet URL."
 
     header_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid={gid}&range=A1:P1"
     with urllib.request.urlopen(header_url) as f:
@@ -52,4 +51,3 @@ def get_sheet_data(url, start_row, num_rows):
 # data, valid, _ = get_sheet_data('', 147, 7)
 # print(data)
 # print(valid)
-

@@ -65,20 +65,29 @@ def get_entry_data(url, start, num, root, order_entry, error_label_ref, btn, sta
     status.start("Fetching spreadsheet data")
 
     def _run():
-        # Fetch the data from the google sheet
-        sheet_data, valid_data, error_message = get_sheet_data(url, start, num)
+        try:
+            # Fetch the data from the google sheet
+            sheet_data, valid_data, error_message = get_sheet_data(url, start, num)
 
-        if valid_data:
-            root.after(0, lambda: status.start("Opening browser"))
-            run_automation(sheet_data, root, order_entry, status)
-        else:
-            # Add error message label to window
-            def _show_errors():
-                error_label_ref[0] = ttk.Label(root, text=error_message, foreground='red')
-                error_label_ref[0].pack()
-                btn.config(state="normal")
+            if valid_data:
+                root.after(0, lambda: status.start("Opening browser"))
+                run_automation(sheet_data, root, order_entry, status)
+            else:
+                # Add error message label to window
+                def _show_errors():
+                    error_label_ref[0] = ttk.Label(root, text=error_message, foreground='red')
+                    error_label_ref[0].pack()
+                    btn.config(state="normal")
+                    status.stop()
+                root.after(0, _show_errors)
+
+        except Exception as e:
+            print(f"Error in background thread: {e}")
+            def _show_crash():
                 status.stop()
-            root.after(0, _show_errors)
+                btn.config(state="normal")
+                messagebox.showerror("Error", f"Something went wrong:\n{e}")
+            root.after(0, _show_crash)
 
     threading.Thread(target=_run, daemon=True).start()
 
