@@ -75,7 +75,7 @@ def get_entry_data(url, start, num, root, order_entry, error_label_ref, btn, sta
             else:
                 # Add error message label to window
                 def _show_errors():
-                    error_label_ref[0] = ttk.Label(root, text=error_message, foreground='red')
+                    error_label_ref[0] = ttk.Label(btn.master, text=error_message, foreground='red')
                     error_label_ref[0].pack()
                     btn.config(state="normal")
                     status.stop()

@@ -136,25 +136,25 @@ def fill_page(computer_data, driver, wait):
     # Fill text input fields
     hardDrive_field = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "hdBarcodes")))
     hardDrive_field.clear()
-    hardDrive_field.send_keys(computer_data["Hard Drive"])
+    hardDrive_field.send_keys(str(computer_data["Hard Drive"]))
 
     computerBarcode_field = driver.find_element(By.ID, "ContentPlaceHolder1_tbx_barcode")
     computerBarcode_field.clear()
-    computerBarcode_field.send_keys(computer_data["Computer Barcode"])
+    computerBarcode_field.send_keys(str(computer_data["Computer Barcode"]))
 
     CPU_dropdown = Select(driver.find_element(By.ID, "ContentPlaceHolder1_ddl_CPU"))
     select_insensitive(CPU_dropdown, computer_data["i Series"])
 
     CPUChipNumber_field = driver.find_element(By.ID, "ContentPlaceHolder1_tbx_ChipNumber")
     CPUChipNumber_field.clear()
-    CPUChipNumber_field.send_keys(computer_data["CPU"])
+    CPUChipNumber_field.send_keys(str(computer_data["CPU"]))
 
     memory_dropdown = Select(driver.find_element(By.ID, "ContentPlaceHolder1_ddl_memory"))
     select_ram_insensitive(memory_dropdown, computer_data["Total Ram"])
 
     numOfRam_field = driver.find_element(By.ID, "ContentPlaceHolder1_tbx_NumOfRam")
     numOfRam_field.clear()
-    numOfRam_field.send_keys(computer_data["# of RAM"])
+    numOfRam_field.send_keys(str(computer_data["# of RAM"]))
 
     fill_in_optical(driver, computer_data["Optical Drive"])
 
@@ -163,8 +163,8 @@ def fill_page(computer_data, driver, wait):
 
     newCOA_field = driver.find_element(By.ID, "ContentPlaceHolder1_tbx_NewWindowsCOA")
     newCOA_field.clear()
-    if "N/A" not in computer_data["New COA"]:
-        newCOA_field.send_keys(computer_data["New COA"])
+    if "N/A" not in str(computer_data["New COA"]):
+        newCOA_field.send_keys(str(computer_data["New COA"]))
 
     print("Form submitted successfully!")
 
@@ -181,8 +181,8 @@ def run_automation(data_list, root_window, order_entry, status=None):
 
     # Cancel program if page is not opened properly
     if wait is None:
-        show_warning(root_window, "Timeout", "Login page not reached. Closing.")
         driver.quit()
+        root_window.after(0, root_window.destroy)
         return
 
     try:

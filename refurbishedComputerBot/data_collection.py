@@ -19,14 +19,14 @@ def get_sheet_data(url, start_row, num_rows):
         return [], False, "Error: Could not parse the Google Sheet URL."
 
     header_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid={gid}&range=A1:P1"
-    with urllib.request.urlopen(header_url) as f:
+    with urllib.request.urlopen(header_url, timeout=30) as f:
         header_line = f.read().decode('utf-8').splitlines()
         headers = next(csv.reader(header_line))
     
 
     data_range = f"A{start_row}:P{start_row + num_rows - 1}"
     data_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid={gid}&range={data_range}"
-    with urllib.request.urlopen(data_url) as f:
+    with urllib.request.urlopen(data_url, timeout=30) as f:
         data_lines = f.read().decode('utf-8').splitlines()
         data_list = [{k: v.strip() for k, v in row.items()} for row in csv.DictReader(data_lines, fieldnames=headers, restval='')]
 
@@ -46,8 +46,3 @@ def get_sheet_data(url, start_row, num_rows):
 
 
     return data_list, valid_data, error_message
-
-# DEBUGGING
-# data, valid, _ = get_sheet_data('', 147, 7)
-# print(data)
-# print(valid)
